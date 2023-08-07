@@ -7,7 +7,7 @@
         size="mini"
       ></el-button>
       <!-- 面包屑区域 -->
-      <span class="bread-text">首页</span>
+      <span class="bread-text"> <CommonBread /> </span>
     </div>
     <div class="r-content">
       <el-dropdown>
@@ -28,7 +28,11 @@
 
 <script>
 import { mapMutations } from "vuex";
+import CommonBread from "@/components/CommonBread.vue";
 export default {
+  components: {
+    CommonBread,
+  },
   methods: {
     // 点击菜单栏
     // ...mapMutations('m_tab',['collapseMenu']),
@@ -53,10 +57,39 @@ export default {
     font-size: 14px;
     margin: 10px;
   }
-  .user {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
+  .r-content {
+    .user {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+    }
+  }
+  .l-content {
+    display: flex;
+    align-items: center;
+    color: #fff;
+    .el-button {
+      margin-right: 20px;
+    }
+    // 这些样式是通过在浏览器处检查得到的
+    ::v-deep .el-breadcrumb {
+      .el-breadcrumb__item {
+        .el-breadcrumb__inner {
+          font-weight: 400;
+          &.is-link {
+            color: #666;
+          }
+        }
+        // ？last-child
+        &:last-child {
+          .el-breadcrumb__inner {
+            &.is-link {
+              color: #fff;
+            }
+          }
+        }
+      }
+    }
   }
 }
 </style>

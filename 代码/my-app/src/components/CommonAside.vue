@@ -109,6 +109,8 @@ export default {
       ) {
         this.$router.push(item.path);
       }
+      // 处理面包屑
+      this.$store.commit("m_tab/selectMenu", item);
     },
   },
   computed: {
@@ -129,7 +131,6 @@ export default {
 };
 </script>
 
-}
 
 <style lang='less' scoped>
 // 需要保留,没有这个菜单栏的展开和收缩会不自然
@@ -137,9 +138,9 @@ export default {
   width: 200px;
   min-height: 400px;
 }
+
 .el-menu {
   height: 100vh;
-  overflow: hidden;
 
   h3 {
     color: #fff;

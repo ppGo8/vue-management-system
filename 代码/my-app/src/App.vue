@@ -16,7 +16,8 @@ export default {
 <style lang="less">
 // 注意这里不能添加scoped,因为要全局生效
 html,
-body {
+body,
+p {
   margin: 0;
   padding: 0;
 }

@@ -1,14 +1,20 @@
 <template>
   <div class="main-container">
+    <!-- 左侧区域：菜单栏 -->
     <el-container>
+      <!-- 菜单栏组件 -->
       <el-aside width="auto">
-        <!-- 左侧菜单栏组件 -->
-        <common-aside></common-aside>
+        <common-aside />
       </el-aside>
+
+      <!-- 右侧区域：头部和路由 -->
       <el-container>
+        <!-- 头部组件-->
         <el-header>
           <common-header />
         </el-header>
+
+        <!-- 路由区域 -->
         <el-main>
           <!-- 子路由的路由出口 -->
           <!-- 路由匹配的组件将会渲染在这里 -->

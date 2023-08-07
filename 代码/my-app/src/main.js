@@ -5,6 +5,7 @@ import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css';
 import router from './router' // 引入路由器router
 import store from './store/index'  // 默认引入index.js
+import './api/mock'
 
 // 按需引入element-ui的组件
 // import { Row, Button } from 'element-ui';
