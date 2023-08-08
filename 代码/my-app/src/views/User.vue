@@ -2,11 +2,15 @@
   <div class="manage">
     <!-- 区域1：新增按钮和搜索区域-->
     <div class="manage-header">
+      <!-- 1.新增按钮 -->
       <el-button type="primary" @click="handleAdd"> + 新增 </el-button>
-      <!-- form搜索区域 -->
-      <el-form :model="userForm">
+      <!-- 2.form搜索区域 -->
+      <el-form :model="userForm" :inline="true">
         <el-form-item>
-          <el-input placeholder="请输入名称"></el-input>
+          <el-input placeholder="请输入名称" v-model="userForm.name"></el-input>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" @click="onSubmit">查询</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -162,7 +166,10 @@ export default {
         page: 1,
         limit: 10,
       },
-      userForm: {},
+      // 用户管理页面 搜索
+      userForm: {
+        name: "",
+      },
     };
   },
   mounted() {
@@ -256,6 +263,10 @@ export default {
       // 重新请求列表数据
       this.getList();
     },
+    // 字符串搜索功能
+    onSubmit() {
+      this.getList();
+    },
 
     // 封装公共方法：获取列表数据
     getList() {
@@ -278,6 +289,11 @@ export default {
 <style lang="less" scoped>
 .manage {
   height: 90%;
+  .manage-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
   .common-table {
     height: calc(100% - 62px);
     position: relative;
