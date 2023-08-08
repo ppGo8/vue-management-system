@@ -24,7 +24,6 @@ export default {
         },
         // 更新面包屑数据
         selectMenu(state, val) {
-            console.log(val);
             // 判断传入的数据是否为首页
             if (val.name !== 'home') {
                 // 如果原路径不在存储的面包屑数据中,才会添加
