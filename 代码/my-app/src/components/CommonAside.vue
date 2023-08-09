@@ -13,6 +13,8 @@
       <h3>{{ isCollapse ? "后台" : "通用后台管理系统" }}</h3>
       <!-- <h3 v-if="isCollapse">后台</h3>
       <h3 v-else>通用后台管理系统</h3> -->
+
+      <!-- 只有一级栏目菜单 -->
       <el-menu-item
         :index="item.name"
         v-for="item in noChildren"
@@ -24,6 +26,7 @@
         <span slot="title">{{ item.label }}</span>
       </el-menu-item>
 
+      <!-- 有二级栏目的菜单 -->
       <el-submenu index="1" v-for="item in hasChildren" :key="item.label">
         <template slot="title">
           <i :class="`el-icon-${item.icon}`"></i>
@@ -47,51 +50,7 @@
 import { mapState, mapMutations } from "vuex";
 export default {
   data() {
-    return {
-      menuData: [
-        {
-          path: "/",
-          name: "home",
-          label: "首页",
-          icon: "s-home",
-          url: "Home/Home",
-        },
-        {
-          path: "/mall",
-          name: "mall",
-          label: "商品管理",
-          icon: "video-play",
-          url: "MallManage/MallManage",
-        },
-        {
-          path: "/user",
-          name: "user",
-          label: "用户管理",
-          icon: "user",
-          url: "UserManage/UserManage",
-        },
-        {
-          label: "其他",
-          icon: "location",
-          children: [
-            {
-              path: "/page1",
-              name: "page1",
-              label: "页面1",
-              icon: "setting",
-              url: "Other/PageOne",
-            },
-            {
-              path: "/page2",
-              name: "page2",
-              label: "页面2",
-              icon: "setting",
-              url: "Other/PageTwo",
-            },
-          ],
-        },
-      ],
-    };
+    return {};
   },
   methods: {
     handleOpen(key, keyPath) {
@@ -126,6 +85,13 @@ export default {
     // ...mapState("m_tab", ["isCollapse"]),
     isCollapse() {
       return this.$store.state.m_tab.isCollapse;
+    },
+    // 不同用户显示的不同菜单
+    menuData() {
+      // store中的数据可能由于刷新丢失了;所以优先从本地存储汇总获得
+      return (
+        JSON.parse(localStorage.getItem("menu")) || this.$store.state.m_tab.menu
+      );
     },
   },
 };

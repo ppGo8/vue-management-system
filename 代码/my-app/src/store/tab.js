@@ -16,6 +16,8 @@ export default {
                 url: "Home/Home",
             }
         ],
+        // 菜单栏数据
+        menu: [],
     }),
     mutations: {
         // 修改菜单展开收起的方法
@@ -34,7 +36,41 @@ export default {
                     state.tabList.push(val)
                 }
             }
+        },
+        // 更改不同用户显示的菜单选项
+        setMenu(state, val) {
+            state.menu = val
+            // 持久存储到本地,防止刷新后消失
+            localStorage.setItem('menu', JSON.stringify(state.menu))
+        },
+        // 动态注册路由
+        addMenu(state, router) {
+            // 判断当前缓存中是否有数据
+            if (!localStorage.getItem('menu')) return
+            const menu = JSON.parse(localStorage.getItem('menu'))
+            state.menu = menu
+            // 组装动态路由的数据
+            const menuArray = []
+            menu.forEach(item => {
+                if (item.children) {
+                    item.children = item.children.map(item => {
+
+                        item.component = () => import(`../views/${item.url}`)
+                        return item
+                    })
+                    menuArray.push(...item.children)
+
+                } else {
+                    item.component = () => import(`../views/${item.url}`)
+                    menuArray.push(item)
+                }
+
+            });
+            console.log('@路由表为：', menuArray);
+            // 动态添加路由
+            menuArray.forEach(item => {
+                router.addRoute('Main', item)
+            })
         }
     }
-
 }

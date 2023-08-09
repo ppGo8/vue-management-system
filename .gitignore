@@ -1,4 +1,5 @@
 # 忽略 node_modules 目录
+/资料
 /node_modules
 /代码/node_modules
 /代码/my-app/node_modules

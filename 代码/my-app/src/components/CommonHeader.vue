@@ -17,7 +17,7 @@
         </span>
         <el-dropdown-menu slot="dropdown">
           <el-dropdown-item>个人中心</el-dropdown-item>
-          <el-dropdown-item>退出</el-dropdown-item>
+          <el-dropdown-item @click.native="logout">退出</el-dropdown-item>
           <!-- <el-dropdown-item disabled>双皮奶</el-dropdown-item> -->
           <!-- <el-dropdown-item divided>蚵仔煎</el-dropdown-item> -->
         </el-dropdown-menu>
@@ -29,6 +29,7 @@
 <script>
 import { mapMutations } from "vuex";
 import CommonBread from "@/components/CommonBread.vue";
+import Cookie from "js-cookie";
 export default {
   components: {
     CommonBread,
@@ -38,6 +39,15 @@ export default {
     // ...mapMutations('m_tab',['collapseMenu']),
     handleMenu() {
       this.$store.commit("m_tab/collapseMenu");
+    },
+    // 用户退出
+    logout() {
+      // 清除cookie中的token
+      Cookie.remove("token");
+      // 清除本地存储中的menu
+      localStorage.removeItem("menu");
+      // 编程式跳转到登录页面
+      this.$router.push("/login");
     },
   },
 };
