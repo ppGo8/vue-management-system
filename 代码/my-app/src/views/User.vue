@@ -16,6 +16,7 @@
     </div>
 
     <!-- 区域2：弹出的提示框 -->
+    <!-- :before-close="handleClose" -->
     <el-dialog
       title="提示"
       :visible.sync="dialogVisible"
@@ -184,6 +185,11 @@ export default {
       this.modalType = 0;
       // 打开弹窗
       this.dialogVisible = true;
+      // 恢复到表单的初始状态
+      this.$nextTick(() => {
+        // 需要放在下一轮操作,等到弹窗显示出来后才更新
+        this.$refs["form"].resetFields();
+      });
     },
     // 点击确定按钮,表单
     submitHandler() {
@@ -210,12 +216,24 @@ export default {
         }
       });
     },
+<<<<<<< HEAD
     // 表单关闭时
     handleClose() {
       // 关闭表单
       this.dialogVisible = false;
       // 清空表单历史数据
       this.$refs.form.resetFields();
+=======
+    // 关闭弹窗框
+    handleClose(done) {
+      // 关闭表单
+      this.dialogVisible = false;
+      // 因为编辑和新增共用一个弹窗,如果在此处使用 this.$refs["form"].resetFields();
+      // 那么编辑点击关闭弹窗时，就会在瞬间闪屏为 空；但是业务逻辑应该是子弹窗上保持着用户的数据
+      // 因此应该只在新增弹框打开时重置数据为空状态;
+      // 为了保持表单一开始的状态为空,需要在将编辑修改的数据放入nextTick中；
+      // 避免第一个编辑的数据成为表单初始状态
+>>>>>>> 5526d3a (修复了用户列表的bug)
     },
     // 点击取消按钮
     cancel() {
@@ -227,9 +245,17 @@ export default {
       this.modalType = 1;
       // 打开弹窗
       this.dialogVisible = true;
+<<<<<<< HEAD
       // 显示该行数据到弹窗上；注意使用深拷贝
       // 不使用深拷贝的话,修改了内容又点击了取消编辑原数据还是会修改
       this.form = JSON.parse(JSON.stringify(row));
+=======
+      // 深拷贝：显示该行数据到弹窗上
+      // 如果使用深拷贝修改了内容又点击了取消编辑原数据还是会修改
+      this.$nextTick(() => {
+        this.form = JSON.parse(JSON.stringify(row));
+      });
+>>>>>>> 5526d3a (修复了用户列表的bug)
     },
     // 点击删除按钮
     handleDelete(val) {
