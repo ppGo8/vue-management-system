@@ -216,14 +216,6 @@ export default {
         }
       });
     },
-<<<<<<< HEAD
-    // 表单关闭时
-    handleClose() {
-      // 关闭表单
-      this.dialogVisible = false;
-      // 清空表单历史数据
-      this.$refs.form.resetFields();
-=======
     // 关闭弹窗框
     handleClose(done) {
       // 关闭表单
@@ -233,7 +225,6 @@ export default {
       // 因此应该只在新增弹框打开时重置数据为空状态;
       // 为了保持表单一开始的状态为空,需要在将编辑修改的数据放入nextTick中；
       // 避免第一个编辑的数据成为表单初始状态
->>>>>>> 5526d3a (修复了用户列表的bug)
     },
     // 点击取消按钮
     cancel() {
@@ -245,17 +236,11 @@ export default {
       this.modalType = 1;
       // 打开弹窗
       this.dialogVisible = true;
-<<<<<<< HEAD
-      // 显示该行数据到弹窗上；注意使用深拷贝
-      // 不使用深拷贝的话,修改了内容又点击了取消编辑原数据还是会修改
-      this.form = JSON.parse(JSON.stringify(row));
-=======
       // 深拷贝：显示该行数据到弹窗上
       // 如果使用深拷贝修改了内容又点击了取消编辑原数据还是会修改
       this.$nextTick(() => {
         this.form = JSON.parse(JSON.stringify(row));
       });
->>>>>>> 5526d3a (修复了用户列表的bug)
     },
     // 点击删除按钮
     handleDelete(val) {
