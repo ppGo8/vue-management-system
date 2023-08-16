@@ -1,13 +1,11 @@
 <template>
   <div class="main-container">
-    <!-- 左侧区域：菜单栏 -->
     <el-container>
-      <!-- 菜单栏组件 -->
+      <!-- 左侧菜单栏 -->
       <el-aside width="auto">
         <common-aside />
       </el-aside>
 
-      <!-- 右侧区域：头部和路由 -->
       <el-container>
         <!-- 头部组件-->
         <el-header>
@@ -45,7 +43,20 @@ export default {
   border-right: none !important;
 }
 /*el-header自带padding */
+.el-aside {
+  width: 200px;
+  overflow-y: auto;
+}
 .el-header {
   padding: 0px;
+  height: 61px;
+  /* 固定el-header */
+  /* overflow-y: auto; */
+}
+.el-main {
+  padding: 16px !important;
+  height: calc(100vh - 61px);
+  /* 主题区域y轴方向移动 */
+  overflow-y: auto;
 }
 </style>

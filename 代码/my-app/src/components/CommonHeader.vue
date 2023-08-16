@@ -16,7 +16,7 @@
           <img class="user" src="../assets/images/user.jpg" alt="" />
         </span>
         <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item>个人中心</el-dropdown-item>
+          <el-dropdown-item @click.native="showinfo">个人中心</el-dropdown-item>
           <el-dropdown-item @click.native="logout">退出</el-dropdown-item>
           <!-- <el-dropdown-item disabled>双皮奶</el-dropdown-item> -->
           <!-- <el-dropdown-item divided>蚵仔煎</el-dropdown-item> -->
@@ -39,6 +39,12 @@ export default {
     // ...mapMutations('m_tab',['collapseMenu']),
     handleMenu() {
       this.$store.commit("m_tab/collapseMenu");
+    },
+    // 进入个人中心
+    showinfo() {
+      if (this.$route.name !== "infoshow") {
+        this.$router.push("/infoshow");
+      }
     },
     // 用户退出
     logout() {

@@ -6,11 +6,12 @@
       :model="form"
       :rules="rules"
       ref="form"
+      @keyup.enter.native="onSubmitKeyup"
     >
       <h3 class="login-title">系统登录</h3>
 
-      <el-form-item label="用户名:" prop="username">
-        <el-input v-model="form.username" placeholder="请输入账号"> </el-input>
+      <el-form-item label="用户名:" prop="name">
+        <el-input v-model="form.name" placeholder="请输入账号"> </el-input>
       </el-form-item>
 
       <el-form-item label="密码:" prop="password">
@@ -28,20 +29,20 @@
 </template>
 
 <script>
-import Mock from "mockjs";
 import Cookie from "js-cookie";
-import { getMenu } from "../api";
+import jwt_decode from "jwt-decode";
+
 export default {
   data() {
     return {
       // 存储用户数据
       form: {
-        username: "",
+        name: "",
         password: "",
       },
       // 表单数据校验
       rules: {
-        username: [
+        name: [
           {
             required: true,
             trigger: "blur", // 触发时机,失去焦点时
@@ -59,37 +60,60 @@ export default {
     };
   },
   methods: {
+    // 检验数据是否为空,为空返回true
+    isEmpty(value) {
+      return (
+        value === undefined ||
+        value === null ||
+        (typeof value === "object" && Object.keys(value).length === 0) ||
+        (typeof value === "string" && value.trim().length === 0)
+      );
+    },
+    // 按下回车
+    onSubmitKeyup() {
+      this.onSubmit();
+    },
     // 登录功能
     onSubmit() {
-      // 前端手动伪造一个假的token信息
-      // const token = Mock.Random.guid(); // 伪token
-      // 这里使用js-cookie将token信息存入cookie，用于不同页面间的通信
-      // 也可以使用本地存储;二者都在在浏览器的application下查看
-      //  Cookie.set("token", token);
-
-      // 校验通过
+      // 检验用户输入的信息
       this.$refs.form.validate((valid) => {
-        // 用户输入数据通过前端校验
+        // 用户输入通过前端校验
         if (valid) {
-          getMenu(this.form).then(({ data }) => {
-            // 业务状态码,返回20000代表成功
-            if (data.code === 20000) {
-              // 存储后端返回的token
-              Cookie.set("token", data.data.token);
+          this.$axios
+            .post("/api/admin/login", this.form)
+            .then((res) => {
+              if (res.status === 200) {
+                console.log("@执行了then");
+                console.log("@登陆成功返回的数据:", res);
+                // 使用cookie存储token,也可以使用本地存储
+                const { token } = res.data;
+                Cookie.set("token", token);
+                // 存储到Vuex:菜单数据
+                this.$store.commit("m_tab/setMenu", res.data.menu);
+                // 存储到Vuex:路由数据
+                this.$store.commit("m_tab/addMenu", this.$router);
 
-              // 获取菜单的数据,存储store中
-              this.$store.commit("m_tab/setMenu", data.data.menu);
+                // 解析token
+                const decoded = jwt_decode(token);
+                console.log("@解析token", decoded);
+                // 存储到Vuex:是否授权和登录用户的信息
+                this.$store.dispatch(
+                  "m_admin/setAuthenticated",
+                  !this.isEmpty(decoded)
+                );
+                this.$store.dispatch("m_admin/setUser", decoded);
 
-              // 获取后端返回的路由,动态设置路由
-              this.$store.commit("m_tab/addMenu", this.$router);
-
-              // 编程式跳转到首页
-              this.$router.push("/home");
-            } else {
-              // 登录失败要给一个友好的提示
-              this.$message.error(data.data.message);
-            }
-          });
+                // 编程式跳转到首页
+                this.$router.push("/home");
+              }
+            })
+            .catch((err) => {
+              console.log("发生了错误", err);
+              // 登录失败提示
+              this.$message.error(err.response.data);
+            });
+        } else {
+          return this.$message("输入数据格式不正确,请重新输入!");
         }
       });
     },

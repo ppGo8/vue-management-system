@@ -1,3 +1,6 @@
+/**
+ * 废弃不用了
+ */
 import axios from 'axios'
 
 const http = axios.create({

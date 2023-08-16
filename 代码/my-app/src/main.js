@@ -9,6 +9,8 @@ import router from './router'
 import store from './store'
 import './api/mock'
 import Cookie from 'js-cookie'
+// 引入二次封装的axios
+import axios from './utils/http.js'
 
 // v-md-editor编辑器
 import VueMarkdownEditor from '@kangc/v-md-editor';
@@ -37,29 +39,10 @@ Vue.use(VueMarkdownEditor);
 // 全局引入
 Vue.use(ElementUI)
 
+Vue.prototype.$axios = axios;
 
-// 添加全局前置导航守卫
-router.beforeEach((to, from, next) => {
-  // 拿到token
-  const token = Cookie.get('token')
-  // token不存在,且用户即将进入网页不是login
-  if (!token && to.name !== 'login') {
-    // 给用户跳转到登录页
-    next({
-      name: 'login' // 在路由js中为路由配置的名字
-    })
-  }
-  // token存在,且用户即将进入的网页是login
-  else if (token && to.name === "login") {
-    // 给用户跳转到首页
-    // next({ name: 'home' })
-    // 给用户跳转的原路径：
-    next({ name: from.name })
-  } else {
-    // 执行后续的逻辑
-    next()
-  }
-})
+
+
 
 
 Vue.config.productionTip = false

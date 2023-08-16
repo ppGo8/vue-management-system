@@ -32,6 +32,9 @@
 import { Editor, Toolbar } from "@wangeditor/editor-for-vue";
 export default {
   components: { Editor, Toolbar },
+  mounted() {
+    this.$axios.get("/api/users");
+  },
   data() {
     return {
       editor: null,
