@@ -7,12 +7,16 @@ import router from '../router/index.js'
 let loading
 // 请求拦截
 axios.interceptors.request.use(config => {
-    // 发送请求时,设置全屏加载动画
-    loading = Loading.service({
-        lock: true,
-        text: '拼命加载中...',
-        background: 'rgba(0, 0, 0, 0.7)'
-    })
+    // 文件上传时有进度条,因此不显示加载东安湖
+    if (config.url !== '/api/upload') {
+        // 发送请求时,设置全屏加载动画
+        loading = Loading.service({
+            lock: true,
+            text: '拼命加载中...',
+            background: 'rgba(0, 0, 0, 0.7)'
+        })
+    }
+
     // 有token就携带token发送请求
     if (Cookie.get('token')) {
         // 设置统一token
@@ -25,8 +29,9 @@ axios.interceptors.request.use(config => {
 
 // 响应拦截
 axios.interceptors.response.use(config => {
-    // 关闭加载动画
-    loading.close()
+    if (loading) {
+        loading.close()
+    }
     // token是否过期
     const { status } = config.data
     if (status === 200) {
@@ -44,7 +49,10 @@ axios.interceptors.response.use(config => {
     }
 }, error => {
     // 关闭加载动画
-    loading.close()
+    if (loading) {
+        loading.close()
+    }
+
     return Promise.reject(error)
 })
 

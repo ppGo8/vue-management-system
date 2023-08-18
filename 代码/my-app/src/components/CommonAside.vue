@@ -27,7 +27,11 @@
       </el-menu-item>
 
       <!-- 有二级栏目的菜单 -->
-      <el-submenu index="1" v-for="item in hasChildren" :key="item.label">
+      <el-submenu
+        :index="item.label"
+        v-for="item in hasChildren"
+        :key="item.label"
+      >
         <template slot="title">
           <i :class="`el-icon-${item.icon}`"></i>
           <span slot="title">{{ item.label }}</span>
@@ -37,9 +41,11 @@
           v-for="subItem in item.children"
           :key="subItem.name"
         >
-          <el-menu-item :index="subItem.path" @click="ClickMenu(subItem)">{{
-            subItem.label
-          }}</el-menu-item>
+          <el-menu-item
+            :index="item.name + subItem.path"
+            @click="ClickMenu(subItem)"
+            >{{ subItem.label }}</el-menu-item
+          >
         </el-menu-item-group>
       </el-submenu>
     </el-menu>
