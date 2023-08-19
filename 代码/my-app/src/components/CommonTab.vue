@@ -16,7 +16,7 @@
 <script>
 import { mapState, mapMutations } from "vuex";
 export default {
-  name: "CommonTag",
+  name: "CommonTab",
   data() {
     return {};
   },
@@ -24,21 +24,21 @@ export default {
     ...mapState("m_tab", ["tabList"]),
   },
   methods: {
-    ...mapMutations("m_tab", ["closeTag"]),
-    // 点击tag跳转
+    ...mapMutations("m_tab", ["closeTab"]),
+    // 点击tab跳转
     changeMenu(item) {
       // 不能跳转到自己
       if (this.$route.name === item.name) return;
       this.$router.push({ name: item.name });
     },
-    // 点击tag删除
+    // 点击tab删除
     handleClose(item, index) {
       const endIndex = this.tabList.length - 1;
 
       // 跳转逻辑
-      // 1. 如果删除tag和不是当前路由
+      // 1. 如果删除tab和不是当前路由
       if (item.name !== this.$route.name) {
-        this.closeTag(item);
+        this.closeTab(item);
         return;
       }
 
@@ -52,7 +52,7 @@ export default {
       }
 
       // 删除
-      this.closeTag(item);
+      this.closeTab(item);
     },
   },
 };

@@ -27,7 +27,6 @@
 </template>
 
 <script>
-import { mapMutations } from "vuex";
 import CommonBread from "@/components/CommonBread.vue";
 import Cookie from "js-cookie";
 export default {
@@ -52,6 +51,10 @@ export default {
       Cookie.remove("token");
       // 清除本地存储中的menu
       localStorage.removeItem("menu");
+      // 清除tab
+      this.$store.commit("m_tab/clearTab");
+      // 清除bread
+      this.$store.commit("m_bread/clearBreaList");
       // 编程式跳转到登录页面
       this.$router.push("/login");
     },

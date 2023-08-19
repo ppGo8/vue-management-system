@@ -49,6 +49,9 @@
             >注册</el-button
           >
         </el-form-item>
+        <div class="back">
+          <router-link to="login">返回登录页</router-link>
+        </div>
       </el-form>
     </section>
   </div>
@@ -216,6 +219,15 @@ export default {
         margin-left: -50px;
       }
     }
+  }
+}
+.back {
+  font-size: 12px;
+  a {
+    text-decoration: none;
+  }
+  .router-link-active {
+    text-decoration: none;
   }
 }
 </style>

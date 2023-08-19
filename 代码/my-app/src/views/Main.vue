@@ -13,7 +13,7 @@
         </el-header>
         <!-- 路由区域 -->
         <el-main>
-          <CommonTag />
+          <CommonTab />
           <!-- 子路由的路由出口 -->
           <!-- 路由匹配的组件将会渲染在这里 -->
           <router-view></router-view>
@@ -26,7 +26,7 @@
 <script>
 import CommonAside from "@/components/CommonAside.vue";
 import CommonHeader from "@/components/CommonHeader.vue";
-import CommonTag from "@/components/CommonTag.vue";
+import CommonTab from "@/components/CommonTab.vue";
 export default {
   data() {
     return {};
@@ -34,7 +34,7 @@ export default {
   components: {
     CommonAside,
     CommonHeader,
-    CommonTag,
+    CommonTab,
   },
 };
 </script>

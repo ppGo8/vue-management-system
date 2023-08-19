@@ -71,10 +71,14 @@ export default {
                 router.addRoute('Main', item)
             })
         },
-        // 删除tag中的数据
-        closeTag(state, val) {
+        // 删除tab中的数据
+        closeTab(state, val) {
             const index = state.tabList.findIndex(item => item.name === val.name)
             state.tabList.splice(index, 1)
         },
+        // 清空tab
+        clearTab(state) {
+            state.tabList.splice(1, state.tabList.length - 1)
+        }
     }
 }
