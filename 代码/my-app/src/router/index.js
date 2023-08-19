@@ -18,7 +18,8 @@ import NotFound from '../views/404.vue'
 import InfoShow from '../views/InfoShow.vue'
 import FundList from '../views/FundList.vue'
 import UploadFile from '../views/UploadFile.vue'
-import ExcelFile from '../views/ExcelFile.vue'
+import ExcelUpload from '../views/ExcelUpload.vue'
+import ExcelExport from '../views/ExcelExport.vue'
 
 // 2.创建路由规则:将路由与组件一一映射
 const routes = [

@@ -13,6 +13,9 @@
               @change="smallFileChange"
               multiple
             />
+            <el-button @click="handleClickSmall" type="primary" size="mini"
+              >选择文件</el-button
+            >
           </div>
 
           <div class="file-list">
@@ -27,7 +30,11 @@
             </el-tag>
           </div>
           <div class="btn">
-            <el-button @click="submitSmall" type="primary" size="mini"
+            <el-button
+              @click="submitSmall"
+              type="primary"
+              size="mini"
+              ref="btnSmall"
               >上传</el-button
             >
           </div>
@@ -40,6 +47,9 @@
           <el-divider></el-divider>
           <div class="btnfile">
             <input type="file" ref="uploader" @change="fileChange" />
+            <el-button @click="handleClick" type="primary" size="mini"
+              >选择文件</el-button
+            >
           </div>
           <div class="file-list">
             <el-tag
@@ -89,19 +99,29 @@ export default {
     };
   },
   methods: {
-    // 用户选择小文件
+    // 点击上传文件按钮
+    handleClickSmall() {
+      this.$refs.smallUploader.click();
+    },
+    // 选择小文件
     smallFileChange(e) {
-      // console.log(e.target.files);
       if (e.target.files.length > 1) {
         this.smallFiles = this.smallFiles.concat(
           Object.values(e.target.files).slice(0, e.target.files.length)
         );
-      } else {
+        return;
+      }
+      if (e.target.files.length === 1) {
         this.smallFiles.push(e.target.files[0]);
+      } else {
+        return;
       }
     },
-    // 用户上传小文件
+    // 上传小文件
     async submitSmall() {
+      if (this.smallFiles.length === 0)
+        return this.$message.error("请选择文件");
+
       this.smallFiles.forEach((item) => {
         const _formData = new FormData();
         _formData.append(item.name + "file", item);
@@ -127,9 +147,15 @@ export default {
       }
       this.smallFiles = newArr;
     },
+    // 点击选择文件按钮——大文件
+    handleClick() {
+      this.$refs.uploader.click();
+    },
     // 用户上传大文件,
     async submit() {
       const file = this.file;
+      if (file.length === 0 && this.percentage === 0)
+        return this.$message.error("请选择文件");
       if (!file) {
         if (this.percentage === 100) {
           this.text = "";
@@ -225,7 +251,8 @@ export default {
   overflow: hidden;
 }
 input[type="file"] {
-  color: transparent;
+  display: none;
+  z-index: -999;
 }
 .el-card {
   margin: 50px;
