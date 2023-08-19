@@ -66,11 +66,15 @@ export default {
                 }
 
             });
-            console.log('@路由表为：', menuArray);
             // 动态添加路由
             menuArray.forEach(item => {
                 router.addRoute('Main', item)
             })
-        }
+        },
+        // 删除tag中的数据
+        closeTag(state, val) {
+            const index = state.tabList.findIndex(item => item.name === val.name)
+            state.tabList.splice(index, 1)
+        },
     }
 }

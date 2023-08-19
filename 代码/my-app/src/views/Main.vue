@@ -11,9 +11,9 @@
         <el-header>
           <common-header />
         </el-header>
-
         <!-- 路由区域 -->
         <el-main>
+          <CommonTag />
           <!-- 子路由的路由出口 -->
           <!-- 路由匹配的组件将会渲染在这里 -->
           <router-view></router-view>
@@ -26,6 +26,7 @@
 <script>
 import CommonAside from "@/components/CommonAside.vue";
 import CommonHeader from "@/components/CommonHeader.vue";
+import CommonTag from "@/components/CommonTag.vue";
 export default {
   data() {
     return {};
@@ -33,6 +34,7 @@ export default {
   components: {
     CommonAside,
     CommonHeader,
+    CommonTag,
   },
 };
 </script>
@@ -55,6 +57,7 @@ export default {
 }
 .el-main {
   padding: 16px !important;
+  /* header区域61 */
   height: calc(100vh - 61px);
   /* 主题区域y轴方向移动 */
   overflow-y: auto;

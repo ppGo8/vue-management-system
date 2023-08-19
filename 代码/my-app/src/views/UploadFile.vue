@@ -3,7 +3,7 @@
     <el-row>
       <el-col :span="12">
         <!-- 单/多文件上传 -->
-        <el-card>
+        <el-card shadow="hover">
           <span>小文件上传——支持多文件上传</span>
           <el-divider></el-divider>
           <div class="btnfile">

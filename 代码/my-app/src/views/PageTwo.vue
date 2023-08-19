@@ -7,7 +7,7 @@
         >v-md-editor</a
       >
     </h1>
-    <v-md-editor v-model="text" style="min-height: 60vh"></v-md-editor>
+    <v-md-editor v-model="text" style="min-height: 55vh"></v-md-editor>
     <el-button type="primary" style="margin-top: 10px" @click="save"
       >保存</el-button
     >

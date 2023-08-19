@@ -3,8 +3,6 @@
     <el-menu
       default-active="1-4-1"
       class="el-menu-vertical-demo"
-      @open="handleOpen"
-      @close="handleClose"
       :collapse="isCollapse"
       background-color="#545c64"
       text-color="#fff"
@@ -43,7 +41,7 @@
         >
           <el-menu-item
             :index="item.name + subItem.path"
-            @click="ClickMenu(subItem)"
+            @click="ClickMenu(subItem, item)"
             >{{ subItem.label }}</el-menu-item
           >
         </el-menu-item-group>
@@ -59,12 +57,6 @@ export default {
     return {};
   },
   methods: {
-    handleOpen(key, keyPath) {
-      console.log(key, keyPath);
-    },
-    handleClose(key, keyPath) {
-      console.log(key, keyPath);
-    },
     // 点击菜单事件
     ClickMenu(item) {
       // 编程实现页面路由跳转
@@ -74,8 +66,10 @@ export default {
       ) {
         this.$router.push(item.path);
       }
-      // 处理面包屑
+      // 处理tag
       this.$store.commit("m_tab/selectMenu", item);
+      // 处理面包屑
+      this.$store.commit("m_bread/setbreadList", arguments);
     },
   },
   computed: {

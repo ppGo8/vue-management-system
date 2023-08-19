@@ -12,8 +12,6 @@
 
 ## 解析内容操作
 
-
-
 将读取的excel转换成Html和Json
 
 使用xlsx库解析内容操作
@@ -68,7 +66,9 @@ book的重要属性：sheets和sheetName
 
 ## world
 
+world做的比较多的是预览。
+
 ![image-20230817215828178](2023-08-17-前端excel和world操作.assets/image-20230817215828178.png)
 
- world做的比较多的是预览
+
 
