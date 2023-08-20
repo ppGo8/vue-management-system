@@ -13,5 +13,7 @@ module.exports = defineConfig({
         changOrigin: true,
       }
     }
-  }
+  },
+  // 配置webpack提高打包速度、减小打包体积
+  
 })

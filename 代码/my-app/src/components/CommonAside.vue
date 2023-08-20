@@ -1,7 +1,8 @@
 <template>
   <div>
     <el-menu
-      default-active="1-4-1"
+      :default-active="activeMenu"
+      router
       class="el-menu-vertical-demo"
       :collapse="isCollapse"
       background-color="#545c64"
@@ -14,7 +15,7 @@
 
       <!-- 只有一级栏目菜单 -->
       <el-menu-item
-        :index="item.name"
+        :index="item.path"
         v-for="item in noChildren"
         :key="item.name"
         @click="ClickMenu(item)"
@@ -40,7 +41,7 @@
           :key="subItem.name"
         >
           <el-menu-item
-            :index="item.name + subItem.path"
+            :index="subItem.path"
             @click="ClickMenu(subItem, item)"
             >{{ subItem.label }}</el-menu-item
           >
@@ -59,6 +60,7 @@ export default {
   methods: {
     // 点击菜单事件
     ClickMenu(item) {
+      console.log();
       // 编程实现页面路由跳转
       if (
         this.$route.path !== item.path &&
@@ -73,6 +75,11 @@ export default {
     },
   },
   computed: {
+    // 高亮的菜单
+    activeMenu() {
+      console.log("高亮菜单计算属性:", this.$route.path);
+      return this.$route.path;
+    },
     // 没有子菜单
     noChildren() {
       return this.menuData.filter((item) => !item.children);

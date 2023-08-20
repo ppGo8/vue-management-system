@@ -25,10 +25,12 @@ export default {
   },
   methods: {
     ...mapMutations("m_tab", ["closeTab"]),
+    ...mapMutations("m_bread", ["setBreadListTab"]),
     // 点击tab跳转
     changeMenu(item) {
       // 不能跳转到自己
       if (this.$route.name === item.name) return;
+      this.setBreadListTab(item.name);
       this.$router.push({ name: item.name });
     },
     // 点击tab删除

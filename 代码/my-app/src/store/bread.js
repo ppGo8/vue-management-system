@@ -36,6 +36,10 @@ export default {
                 state.breadList.push(val[1]) // 父菜单
                 state.breadList.push(val[0]) // 子菜单
             }
+        },
+        // tab页点击的跳转
+        setBreadListTab(state, val) {
+            console.log('tab传递过来的数据是:', val);
         }
 
     },

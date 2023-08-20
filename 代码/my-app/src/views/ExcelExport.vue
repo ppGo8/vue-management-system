@@ -14,7 +14,7 @@
       >
     </div>
     <!-- 区域2:表格区域 -->
-    <div class="table">
+    <div class="table" v-if="tableData.length !== 0">
       <el-table
         ref="multipleTable"
         :data="tableData"
