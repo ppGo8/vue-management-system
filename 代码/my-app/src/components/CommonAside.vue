@@ -2,7 +2,6 @@
   <div>
     <el-menu
       :default-active="activeMenu"
-      router
       class="el-menu-vertical-demo"
       :collapse="isCollapse"
       background-color="#545c64"
@@ -60,13 +59,14 @@ export default {
   methods: {
     // 点击菜单事件
     ClickMenu(item) {
-      console.log();
       // 编程实现页面路由跳转
       if (
         this.$route.path !== item.path &&
         !(this.$route.path === "/home" && item.path === "/")
       ) {
-        this.$router.push(item.path);
+        this.$router.push(item.path).catch((err) => {
+          console.log(err);
+        });
       }
       // 处理tag
       this.$store.commit("m_tab/selectMenu", item);
@@ -77,7 +77,6 @@ export default {
   computed: {
     // 高亮的菜单
     activeMenu() {
-      console.log("高亮菜单计算属性:", this.$route.path);
       return this.$route.path;
     },
     // 没有子菜单

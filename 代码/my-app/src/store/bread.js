@@ -33,15 +33,41 @@ export default {
             }
             // 二级菜单
             if (val.length === 2) {
+                // 现将父菜单的内容存储到面包屑中
                 state.breadList.push(val[1]) // 父菜单
                 state.breadList.push(val[0]) // 子菜单
             }
         },
         // tab页点击的跳转
         setBreadListTab(state, val) {
-            console.log('tab传递过来的数据是:', val);
-        }
+            // 清空之前的数据,只保留首页
+            this.commit('m_bread/clearBreaList')
 
+            if (val.name === 'home') return
+
+            // 判断传过来的是否为二级菜单
+            // 如果是,获取该二级菜单的父菜单添加到breadlist中
+            const menu = JSON.parse(localStorage.getItem('menu'))
+            const hasChildren = menu.filter((item) => item.children);
+            const parentMenu = hasChildren.filter((item) => {
+                for (let i = 0; i < item.children.length; i++) {
+                    if (item.children[i].name === val.name) {
+                        return true
+                        break
+                    }
+                }
+            })
+            if (parentMenu.length !== 0) {
+                // 添加父菜单
+                state.breadList.push(parentMenu[0])
+                // 添加自己
+                state.breadList.push(val)
+                return
+            }
+
+            // 传过来的val是一级菜单,那么直接添加到breadlist中
+            state.breadList.push(val)
+        }
     },
 
 }

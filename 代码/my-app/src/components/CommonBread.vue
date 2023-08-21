@@ -1,6 +1,9 @@
 <template>
   <el-breadcrumb separator="/">
     <el-breadcrumb-item v-for="(item, index) in breadList" :key="item.label">
+      <!-- 一级菜单 -->
+      <!-- !item.path:二级菜单的一级菜单,没有路由所以用span显示 -->
+      <!-- index === breadList.length - 1:面包屑的最后一个内容,及当前路径不能跳转-->
       <span
         v-if="!item.path || index === breadList.length - 1"
         class="no-redirect"

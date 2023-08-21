@@ -30,7 +30,7 @@ export default {
     changeMenu(item) {
       // 不能跳转到自己
       if (this.$route.name === item.name) return;
-      this.setBreadListTab(item.name);
+      this.setBreadListTab(item);
       this.$router.push({ name: item.name });
     },
     // 点击tab删除
@@ -46,10 +46,13 @@ export default {
 
       // 2.删除最后一项(且是当前路由)
       if (index === endIndex) {
+        // 传递给breadlist
+        this.setBreadListTab(this.tabList[index - 1]);
         this.$router.push(this.tabList[index - 1].name);
       }
       // 删除中间的(且当前路由)
       else {
+        this.setBreadListTab(this.tabList[index + 1]);
         this.$router.push(this.tabList[index + 1].name);
       }
 
