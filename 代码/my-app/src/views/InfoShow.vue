@@ -26,9 +26,6 @@
 <script>
 export default {
   name: "infoshow",
-  mounted() {
-    console.log(this.$store.getters["m_admin/user"]);
-  },
   computed: {
     user() {
       return this.$store.getters["m_admin/user"];

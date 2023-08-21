@@ -20,17 +20,13 @@
           </el-date-picker>
         </el-form-item>
         <el-form-item>
-          <el-button
-            type="primary"
-            size="small"
-            icon="search"
-            @click="handleSearch()"
+          <el-button type="primary" icon="search" @click="handleSearch()"
             >筛选</el-button
           >
         </el-form-item>
 
         <el-form-item class="btnAdd">
-          <el-button type="primary" size="small" icon="view" @click="onAddMoney"
+          <el-button type="primary" icon="view" @click="onAddMoney"
             >添加</el-button
           >
         </el-form-item>
@@ -110,13 +106,13 @@
             <el-button
               type="warning"
               icon="deit"
-              size="small"
+              size="mini"
               :disabled="user.identity !== 'admin' ? true : false"
               @click="handleEdit(scope.$index, scope.row)"
               >编辑</el-button
             >
             <el-button
-              size="small"
+              size="mini"
               icon="delete"
               type="danger"
               :disabled="user.identity !== 'admin' ? true : false"

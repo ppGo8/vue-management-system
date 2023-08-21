@@ -36,7 +36,10 @@
         </el-form-item>
 
         <el-form-item label="年龄" prop="age">
-          <el-input placeholder="请输入年龄" v-model="form.age"></el-input>
+          <el-input
+            placeholder="请输入年龄"
+            v-model.number="form.age"
+          ></el-input>
         </el-form-item>
 
         <el-form-item label="性别" prop="sex">
@@ -72,20 +75,33 @@
     <div class="common-table">
       <!-- 第一部分:表格 -->
       <el-table :data="tableData" stripe style="width: 100%" height="90%">
-        <el-table-column prop="name" label="姓名"> </el-table-column>
-        <el-table-column prop="sex" label="性别">
+        <el-table-column
+          type="index"
+          label="序号"
+          align="center"
+          width="50"
+        ></el-table-column>
+
+        <el-table-column prop="name" label="姓名" center> </el-table-column>
+        <el-table-column prop="sex" label="性别" center>
           <template slot-scope="scope">
             <span style="margin-left: 10px">{{
-              scope.row.sex === 0 ? "男" : "女"
+              Number(scope.row.sex) === 0 ? "男" : "女"
             }}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="age" label="年龄"> </el-table-column>
-        <el-table-column prop="birth" label="出生日期"> </el-table-column>
-        <el-table-column prop="addr" label="地址"> </el-table-column>
-        <el-table-column prop="addr" label="编辑">
+        <el-table-column prop="age" label="年龄" center> </el-table-column>
+        <el-table-column prop="birth" label="出生日期" center>
           <template slot-scope="scope">
-            <el-button size="mini" @click="handleEdit(scope.row)"
+            <span style="margin-left: 10px">{{
+              scope.row.birth.substr(0, 10)
+            }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column prop="addr" label="地址" center> </el-table-column>
+        <el-table-column prop="edit" label="编辑">
+          <template slot-scope="scope">
+            <el-button size="mini" @click="handleEdit(scope.row)" type="warning"
               >编辑</el-button
             >
             <el-button
@@ -111,13 +127,15 @@
 </template>
 
 <script>
-import { getUser, addUser, editUser, delUser } from "../api";
+import qs from "qs";
+
 export default {
   data() {
     return {
       // 是否显示表单
       dialogVisible: false,
       form: {
+        // 后端会传过来id
         name: "",
         age: "",
         sex: "",
@@ -136,6 +154,10 @@ export default {
           {
             required: true,
             message: "请输入年龄",
+          },
+          {
+            type: "number",
+            message: "请输入数字",
           },
         ],
         sex: [
@@ -164,8 +186,8 @@ export default {
       // 用户列表数据总条数,
       total: 0, // 默认为0
       pageData: {
-        page: 1,
-        limit: 10,
+        pageNum: 1,
+        pageSize: 10,
       },
       // 用户管理页面 搜索
       userForm: {
@@ -199,17 +221,31 @@ export default {
         if (valid) {
           // 后续对数据的处理
           if (this.modalType === 0) {
-            addUser(this.form).then(() => {
-              // 重新获取列表接口
-              this.getList();
-            });
+            this.$axios
+              .post("/api/users", qs.stringify(this.form), {
+                headers: {
+                  "Content-Type": "application/x-www-form-urlencoded",
+                },
+              })
+              .then((res) => {
+                console.log(res);
+                // 重新获取列表接口
+                this.getList();
+              });
           } else {
             // 调用编辑接口
-            editUser(this.form).then(() => {
-              // 重新获取列表接口
-              this.getList();
-            });
+            this.$axios
+              .put(`/api/users/${this.form.id}`, qs.stringify(this.form))
+              .then((res) => {
+                console.log(res);
+                this.$message.success("数据编辑成功");
+              })
+              .catch((err) => {
+                console.log(err);
+              });
           }
+          // 重新获取列表接口
+          this.getList();
 
           // 关闭表单的操作
           this.handleClose();
@@ -233,6 +269,7 @@ export default {
     // 点击编辑按钮
     handleEdit(row) {
       // 打开的弹窗是编辑弹窗
+
       this.modalType = 1;
       // 打开弹窗
       this.dialogVisible = true;
@@ -240,6 +277,7 @@ export default {
       // 如果使用深拷贝修改了内容又点击了取消编辑原数据还是会修改
       this.$nextTick(() => {
         this.form = JSON.parse(JSON.stringify(row));
+        this.form.sex = Number(this.form.sex) === 0 ? "男" : "女";
       });
     },
     // 点击删除按钮
@@ -251,7 +289,7 @@ export default {
       })
         .then(() => {
           // 删除数据一般使用id作为表示
-          delUser({ id: val.id }).then(() => {
+          this.$axios.delete(`/api/users/${val.id}`).then(() => {
             this.$message({
               type: "success",
               message: "删除成功!",
@@ -270,7 +308,7 @@ export default {
     // 分页器数据发生变化
     handlePage(val) {
       // 修改data的值
-      this.pageData.page = val;
+      this.pageData.pageNum = val;
       // 重新请求列表数据
       this.getList();
     },
@@ -281,17 +319,16 @@ export default {
 
     // 封装公共方法：获取列表数据
     getList() {
-      // 请求列表数据时,传递页码和页数
-      getUser({ params: { ...this.pageData, ...this.userForm } }).then(
-        ({ data }) => {
-          console.log(data);
-          this.tableData = data.list;
-          // this.total = data.list.length || 0; //这个是当前返回的数据的条数,一般只返回一部分(一页),请求更多数据时再返回其他的
-
+      this.$axios
+        .get("/api/users", { params: { ...this.pageData, ...this.userForm } })
+        .then((data) => {
+          this.tableData = data.data.list;
           // 后端提供了用户数据的总长度
-          this.total = data.count || 0;
-        }
-      );
+          this.total = data.data.count || 0;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     },
   },
 };

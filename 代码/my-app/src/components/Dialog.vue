@@ -35,18 +35,22 @@
           </el-form-item>
 
           <el-form-item prop="income" label="收入:">
-            <el-input type="income" v-model="formData.income"> </el-input>
+            <el-input type="income" v-model.number="formData.income">
+            </el-input>
           </el-form-item>
 
           <el-form-item prop="expenditure" label="支出:">
             <el-input
               type="expenditure"
-              v-model="formData.expenditure"
+              v-model.number="formData.expenditure"
             ></el-input>
           </el-form-item>
 
           <el-form-item prop="account" label="账户现金:">
-            <el-input type="account" v-model="formData.account"></el-input>
+            <el-input
+              type="account"
+              v-model.number="formData.account"
+            ></el-input>
           </el-form-item>
 
           <el-form-item label="备注:">
@@ -90,15 +94,15 @@ export default {
         ],
         income: [
           { required: true, message: "收入不能为空！", trigger: "blur" },
-          // { type: "number", message: "必须为数字值", trigger: "blur" },
+          { type: "number", message: "必须为数字值", trigger: "blur" },
         ],
         expenditure: [
           { required: true, message: "支出不能为空！", trigger: "blur" },
-          // { type: "number", message: "必须为数字值", trigger: "blur" },
+          { type: "number", message: "必须为数字值", trigger: "blur" },
         ],
         account: [
           { required: true, message: "账户不能为空！", trigger: "blur" },
-          // { type: "number", message: "必须为数字值", trigger: "blur" },
+          { type: "number", message: "必须为数字值", trigger: "blur" },
         ],
       },
     };

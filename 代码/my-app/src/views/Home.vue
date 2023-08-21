@@ -6,8 +6,10 @@
           <div class="user">
             <img src="../assets/images/user.jpg" alt="" />
             <div class="userinfo">
-              <p class="name">PPGO8</p>
-              <p class="access">超级管理员</p>
+              <p class="name">{{ user.name }}</p>
+              <p class="access">
+                {{ user.identity == "admin" ? "超级管理员" : "普通员工" }}
+              </p>
             </div>
           </div>
           <div class="login-info">
@@ -241,6 +243,11 @@ export default {
       };
       pieEcharts.setOption(echartsPieOptions);
     });
+  },
+  computed: {
+    user() {
+      return this.$store.getters["m_admin/user"];
+    },
   },
 };
 </script>
