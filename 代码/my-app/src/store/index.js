@@ -1,8 +1,8 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import moduleTab from '@/store/tab.js'
-import moduleAdmin from '@/store/admin.js'
-import moduleBread from '@/store/bread.js'
+import moduleTab from './tab.js'
+import moduleAdmin from './admin.js'
+import moduleBread from './bread.js'
 Vue.use(Vuex)
 
 // 创建Vuex的实例

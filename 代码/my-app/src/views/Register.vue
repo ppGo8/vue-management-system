@@ -225,6 +225,7 @@ export default {
   font-size: 12px;
   a {
     text-decoration: none;
+    color: #0080ff;
   }
   .router-link-active {
     text-decoration: none;

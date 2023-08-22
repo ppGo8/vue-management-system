@@ -24,9 +24,9 @@
 </template>
 
 <script>
-import CommonAside from "@/components/CommonAside.vue";
-import CommonHeader from "@/components/CommonHeader.vue";
-import CommonTab from "@/components/CommonTab.vue";
+import CommonAside from "../components/CommonAside.vue";
+import CommonHeader from "../components/CommonHeader.vue";
+import CommonTab from "../components/CommonTab.vue";
 export default {
   data() {
     return {};

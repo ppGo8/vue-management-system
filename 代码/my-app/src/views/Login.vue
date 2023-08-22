@@ -95,8 +95,6 @@ export default {
             .post("/api/admin/login", this.form)
             .then((res) => {
               if (res.status === 200) {
-                console.log("@执行了then");
-                console.log("@登陆成功返回的数据:", res);
                 // 使用cookie存储token,也可以使用本地存储
                 const { token } = res.data;
                 Cookie.set("token", token);
@@ -107,7 +105,7 @@ export default {
 
                 // 解析token
                 const decoded = jwt_decode(token);
-                console.log("@解析token", decoded);
+
                 // 存储到Vuex:是否授权和登录用户的信息
                 this.$store.dispatch(
                   "m_admin/setAuthenticated",
@@ -120,7 +118,6 @@ export default {
               }
             })
             .catch((err) => {
-              console.log("发生了错误", err);
               // 登录失败提示
               this.$message.error(err.response.data);
             });
@@ -174,6 +171,7 @@ export default {
 
   a {
     text-decoration: none;
+    color: #0080ff;
   }
   .router-link-active {
     text-decoration: none;

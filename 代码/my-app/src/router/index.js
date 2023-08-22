@@ -5,21 +5,27 @@ import Cookie from 'js-cookie'
 // 0.使用路由插件
 Vue.use(VueRouter)
 
-// 1.引入路由组件:通过import方法引入
-import Main from '../views/Main.vue'
-import Home from '../views/Home.vue'
-import User from '../views/User.vue'
-import Mall from '../views/Mall.vue'
-import PageOne from '../views/PageOne.vue'
-import PageTwo from '../views/PageTwo.vue'
-import Login from '../views/Login.vue'
-import Register from '../views/Register.vue'
-import NotFound from '../views/404.vue'
-import InfoShow from '../views/InfoShow.vue'
-import FundList from '../views/FundList.vue'
-import UploadFile from '../views/UploadFile.vue'
-import ExcelUpload from '../views/ExcelUpload.vue'
-import ExcelExport from '../views/ExcelExport.vue'
+// 1.引入路由组件:通过import动态导入;其他注释的路由组件由后端传过来动态导入
+const Login = () => import('../views/Login.vue')
+const Register = () => import('../views/Register.vue')
+
+const Main = () => import(/* webpackChunkName: "group-index" */'../views/Main.vue')
+// const Home = () => import(/* webpackChunkName: "group-index" */'../views/Home.vue')
+
+const NotFound = () => import(/* webpackChunkName: "group-other" */'../views/404.vue')
+const InfoShow = () => import(/* webpackChunkName: "group-other" */'../views/InfoShow.vue')
+
+// const User = () => import(/* webpackChunkName: "group-user" */'../views/User.vue')
+
+// const FundList = () => import(/* webpackChunkName: "group-fund"*/ '../views/FundList.vue')
+
+// const PageOne = () => import(/* webpackChunkName: "group-page" */'../views/PageOne.vue')
+// const PageTwo = () => import(/* webpackChunkName: "group-page" */'../views/PageTwo.vue')
+
+// const UploadFile = () => import(/* webpackChunkName: "group-file" */'../views/UploadFile.vue')
+// const ExcelUpload = () => import(/* webpackChunkName: "group-file" */'../views/ExcelUpload.vue')
+// const ExcelExport = () => import(/* webpackChunkName: "group-file" */'../views/ExcelExport.vue')
+
 
 // 2.创建路由规则:将路由与组件一一映射
 const routes = [
@@ -90,4 +96,4 @@ router.beforeEach((to, from, next) => {
 
 
 // 4.暴露路由器
-export default router
+export default router 

@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import CommonBread from "@/components/CommonBread.vue";
+import CommonBread from "./CommonBread.vue";
 import Cookie from "js-cookie";
 export default {
   components: {

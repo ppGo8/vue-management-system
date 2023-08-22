@@ -1,7 +1,6 @@
 /**
  * 存储面包屑数据
  */
-
 export default {
     namespaced: true,
     state: () => ({
@@ -53,7 +52,6 @@ export default {
                 for (let i = 0; i < item.children.length; i++) {
                     if (item.children[i].name === val.name) {
                         return true
-                        break
                     }
                 }
             })

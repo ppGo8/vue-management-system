@@ -70,7 +70,7 @@
 
 <script>
 import { getData } from "../api";
-import * as echarts from "echarts";
+import echarts from "../plugins/echarts.js";
 
 export default {
   data() {
@@ -127,7 +127,7 @@ export default {
     getData().then(({ data }) => {
       // 使用解构赋值的语法
       const { tableData } = data.data;
-      this.tableData = tableData;
+      this.tableData = tableData || [];
 
       // 绘制折线图
       // 基于准备好的dom,初始化echarts实例
