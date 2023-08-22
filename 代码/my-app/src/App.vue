@@ -19,6 +19,7 @@ export default {
       this.$store.dispatch("m_admin/setAuthenticated", !this.isEmpty(decoded));
       this.$store.dispatch("m_admin/setUser", decoded);
     }
+    
   },
   methods: {
     isEmpty(value) {

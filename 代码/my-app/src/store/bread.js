@@ -37,13 +37,13 @@ export default {
                 state.breadList.push(val[0]) // 子菜单
             }
         },
-        // tab页点击的跳转
+        // tab页点击的跳转&&刷新页面时
         setBreadListTab(state, val) {
             // 清空之前的数据,只保留首页
             this.commit('m_bread/clearBreaList')
 
+            // 后面都是通过name进行的判断
             if (val.name === 'home') return
-
             // 判断传过来的是否为二级菜单
             // 如果是,获取该二级菜单的父菜单添加到breadlist中
             const menu = JSON.parse(localStorage.getItem('menu'))
@@ -51,6 +51,11 @@ export default {
             const parentMenu = hasChildren.filter((item) => {
                 for (let i = 0; i < item.children.length; i++) {
                     if (item.children[i].name === val.name) {
+                        // tab栏传进来的val是完整的菜单形式,有val.lable
+                        // 页面刷新后,传进来的val之后name,没有val.label
+                        if (!val.label) {
+                            val = item.children[i]
+                        }
                         return true
                     }
                 }
@@ -63,8 +68,16 @@ export default {
                 return
             }
 
-            // 传过来的val是一级菜单,那么直接添加到breadlist中
-            state.breadList.push(val)
+            // 一级菜单
+            if (val.label) {
+                // tab点击传递过来的菜单,是完整的路由所以可以直接添加到state中
+                state.breadList.push(val)
+            } else {
+                // 刷新传过来的只有val.name
+                const noChildren = menu.filter((item) => !item.children);
+                const firstMenu = noChildren.filter((item) => item.name === val.name)
+                state.breadList.push(firstMenu[0])
+            }
         }
     },
 

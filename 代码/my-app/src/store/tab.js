@@ -54,7 +54,6 @@ export default {
             menu.forEach(item => {
                 if (item.children) {
                     item.children = item.children.map(item => {
-
                         item.component = () => import(`../views/${item.url}`)
                         return item
                     })
@@ -70,15 +69,49 @@ export default {
             menuArray.forEach(item => {
                 router.addRoute('Main', item)
             })
+            // 在所有动态路由都添加完之后添加404路由
+            router.addRoute({
+                path: '*', name: '404', component: () => import(`../views/404.vue`)
+            })
         },
         // 删除tab中的数据
         closeTab(state, val) {
             const index = state.tabList.findIndex(item => item.name === val.name)
             state.tabList.splice(index, 1)
         },
-        // 清空tab
+        // 清空tab,只保留首页
         clearTab(state) {
             state.tabList.splice(1, state.tabList.length - 1)
+        },
+        // 页面刷新
+        refreshTab(state, val) {
+            this.commit('m_tab/clearTab')
+            if (val.name === 'home') return
+
+
+            const menu = JSON.parse(localStorage.getItem('menu'))
+            const hasChildren = menu.filter((item) => item.children);
+            const parentMenu = hasChildren.filter((item) => {
+                for (let i = 0; i < item.children.length; i++) {
+                    if (item.children[i].name === val.name) {
+                        val = item.children[i]
+                        return true
+                    }
+                }
+            })
+            if (parentMenu.length !== 0) {
+                // 添加自己
+                state.tabList.push(val)
+                return
+            }
+
+            // 一级菜单
+            const noChildren = menu.filter((item) => !item.children);
+            const firstMenu = noChildren.filter((item) => item.name === val.name)
+            state.tabList.push(firstMenu[0])
+
+
+
         }
     }
 }

@@ -12,7 +12,7 @@ const Register = () => import('../views/Register.vue')
 const Main = () => import(/* webpackChunkName: "group-index" */'../views/Main.vue')
 // const Home = () => import(/* webpackChunkName: "group-index" */'../views/Home.vue')
 
-const NotFound = () => import(/* webpackChunkName: "group-other" */'../views/404.vue')
+// const NotFound = () => import(/* webpackChunkName: "group-other" */'../views/404.vue')
 const InfoShow = () => import(/* webpackChunkName: "group-other" */'../views/InfoShow.vue')
 
 // const User = () => import(/* webpackChunkName: "group-user" */'../views/User.vue')
@@ -55,14 +55,15 @@ const routes = [
     {
         path: '/register', name: 'register', component: Register
     },
-    // 404路由
-    {
-        path: '*', name: '404', component: NotFound
-    }
+    // 404路由;动态添加,因为导致了刷新报错
+    // {
+    //     path: '*', name: '404', component: NotFound
+    // }
 ]
 
 // 3.创建router实例,传入routes配置
 const router = new VueRouter({
+    mode: 'hash', // 防止上线后项目刷新导致404
     routes // 缩写,等价于routes:routes
 })
 

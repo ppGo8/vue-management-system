@@ -36,6 +36,13 @@ export default {
     CommonHeader,
     CommonTab,
   },
+  created() {
+    // 不能再APP中写,因为APP中没办法获得子组件路由,name值为null
+    // 刷新时,bread显示当前路径,tab只显示当前路径的tab
+    const { name } = this.$route;
+    this.$store.commit("m_bread/setBreadListTab", { name });
+    this.$store.commit("m_tab/refreshTab", { name });
+  },
 };
 </script>
 

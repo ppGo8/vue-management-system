@@ -29,6 +29,6 @@ new Vue({
   render: h => h(App),
   // 解决：动态路由,页面刷新导致变空白的问题
   created() {
-    store.commit('m_tab/addMenu', router)
+    store.commit('m_tab/addMenu', this.$router)
   }
 }).$mount('#app')
