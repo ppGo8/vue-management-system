@@ -1,9 +1,5 @@
 # vue-manage-system
 
-基于vue2+vuex+开发的后台管理系统。
-
-## 前言
-
 <a href="https://github.com/vuejs/vue">
     <img src="https://img.shields.io/static/v1?label=vue&message=2.6.14&color=green"/>
  </a><a href="https://github.com/ElemeFE/element">
@@ -29,12 +25,19 @@
   - 显示当前用户所在的路径
 -  表单功能
   - 支持增删改查
+
   - 支持分页显示、设置页码大小
+
   - 支持搜索查询
+
 -  文件管理
-  - 单文件上传、多文件上传
+
+  -  单文件上传、多文件上传
+
   - 大文件上传，支持断点续传和进度条功能
+
   - excel上传和下载，支持拖拽上传
+
 -  富文本/markdown编辑器
 -  权限管理和动态路由
    - 分为管理员和普通员工两个权限
