@@ -77,9 +77,6 @@
 
 ![image-20230823103509770](README.assets/image-20230823103509770.png)
 
-### 上传excel
-
-![image-20230823103432894](README.assets/image-20230823103432894.png)
 
 ### 编辑器
 
