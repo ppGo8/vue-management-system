@@ -12,7 +12,7 @@
 
 - UI：Element-ui
 - Vue全家桶：vue2、vue-router、vuex、axios
-- 后台接口：nodejs、express、mysql，编写Restful风格接口
+- 后台接口：nodejs、express、mysql，编写RESTful风格接口；使用JWT和Passport实现 Token 验证
 - 打包上线：使用webpack优化项目打包，申请、配置阿里云服务器，将项目打包上线。（服务器申请不到3个月不能进行ICP备案，所以还不能访问）
 
 ## 功能 
