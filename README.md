@@ -7,6 +7,7 @@
 </a>
 
 基于vue2+ Element UI开发的后台管理系统。项目功能较为完善，实现逻辑简单。
+[后端项目点此跳转](https://github.com/ppGo8/vue-management-system-api)
 
 ## 技术栈
 
